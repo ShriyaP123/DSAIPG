@@ -6,25 +6,12 @@ package com.phasmidsoftware.dsaipg.misc;
 
 class NewtonApproximation {
     public static void main(String[] args) {
-//        // Newton's Approximation to solve cos(x) = x
-//        double x = 1.0;
-//        int left = 200;
-//        for (; left > 0; left--) {
-//            final double y = Math.cos(x) - x;
-//            if (Math.abs(y) < 1E-7) {
-//                System.out.println("the solution to cos(x)=x is: " + x);
-//                System.exit(0);
-//            }
-//            x = x + y / (Math.sin(x) + 1);
-//        }
-
         // Newton's Approximation to solve sec(x) - x^2 = 0
         double x = 1.0; // Initial guess
         int left = 200; // Maximum iterations
         for (; left > 0; left--) {
             // f(x) = sec(x) - x^2
             final double y = (1 / Math.cos(x)) - x * x;
-            // Check for convergence
             if (Math.abs(y) < 1E-7) {
                 System.out.println("The solution to sec(x) - x^2 = 0 is: " + x);
                 System.exit(0);
