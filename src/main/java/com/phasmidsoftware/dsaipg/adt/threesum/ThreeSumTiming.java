@@ -12,13 +12,6 @@ public class ThreeSumTiming {
         System.out.println("ThreeSumQuadrithmic:");
         for (int size : sizes) {
             int[] arr = generateRandomArray(size);
-            System.out.println("ThreeSumQuadrithmic with getTriple(int i, int j):");
-            try (Stopwatch stopwatch = new Stopwatch()) {
-                ThreeSumQuadrithmic threeSum = new ThreeSumQuadrithmic(arr);
-                threeSum.getTriple(3, 4);  // This is where the time is spent
-                System.out.println("N = " + size + ", Time = " + stopwatch.lap() + " ms");
-            }
-            System.out.println("ThreeSumQuadrithmic with getTriples():");
             try (Stopwatch stopwatch = new Stopwatch()) {
                 ThreeSumQuadrithmic threeSum = new ThreeSumQuadrithmic(arr);
                 threeSum.getTriples();  // This is where the time is spent
@@ -30,16 +23,9 @@ public class ThreeSumTiming {
         System.out.println("ThreeSumQuadratic:");
         for (int size : sizes) {
             int[] arr = generateRandomArray(size);
-            System.out.println("ThreeSumQuadratic with getTriples():");
             try (Stopwatch stopwatch = new Stopwatch()) {
                 ThreeSumQuadratic threeSum = new ThreeSumQuadratic(arr);
                 threeSum.getTriples();  // This is where the time is spent
-                System.out.println("N = " + size + ", Time = " + stopwatch.lap() + " ms");
-            }
-            System.out.println("ThreeSumQuadratic with getTriples(int j):");
-            try (Stopwatch stopwatch = new Stopwatch()) {
-                ThreeSumQuadratic threeSum = new ThreeSumQuadratic(arr);
-                threeSum.getTriples(3);  // This is where the time is spent
                 System.out.println("N = " + size + ", Time = " + stopwatch.lap() + " ms");
             }
         }
