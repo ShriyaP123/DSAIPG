@@ -64,8 +64,40 @@ public class Timer {
      * @return the average milliseconds per repetition.
      */
     public <T, U> double repeat(int n, boolean warmup, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
-        // TO BE IMPLEMENTED : note that the timer is running when this method is called and should still be running when it returns.
-         return 0;
+        // note that the timer is running when this method is called and should still be running when it returns.
+        if(n == 0){
+            return 0.0;
+        }
+        if (n < 0) {
+            throw new IllegalArgumentException("Number of iterations must be greater than 0");
+        }
+        pause();
+        if (warmup) {
+            for (int i = 0; i < 10; i++) {
+                T input = supplier.get();
+                if (preFunction != null) {
+                    input = preFunction.apply(input);
+                }
+                U output = function.apply(input);
+                if (postFunction != null) {
+                    postFunction.accept(output);
+                }
+            }
+        }
+        resume();
+        for (int i = 0; i < n; i++) {
+            T input = supplier.get();
+            if (preFunction != null) {
+                input = preFunction.apply(input);
+            }
+            U output = function.apply(input);
+            if (postFunction != null) {
+                postFunction.accept(output);
+            }
+            lap();
+        }
+        pause();
+        return meanLapTime();
         // END SOLUTION
     }
 
@@ -239,8 +271,7 @@ public class Timer {
      * @return the number of ticks for the system clock. Currently defined as nano time.
      */
     private static long getClock() {
-        // TO BE IMPLEMENTED 
-         return 0;
+        return System.nanoTime();
         // END SOLUTION
     }
 
@@ -252,8 +283,7 @@ public class Timer {
      * @return the corresponding number of milliseconds.
      */
     private static double toMillisecs(long ticks) {
-        // TO BE IMPLEMENTED 
-         return 0;
+        return ticks / 1_000_000.0;
         // END SOLUTION
     }
 

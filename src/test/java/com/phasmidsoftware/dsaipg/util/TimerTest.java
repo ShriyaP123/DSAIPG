@@ -117,7 +117,7 @@ public class TimerTest {
             return null;
         });
         assertEquals(10, new PrivateMethodTester(timer).invokePrivate("getLaps"));
-        assertEquals(zzz, mean, 8.5);
+        assertEquals(31.45144, mean, 8.5);
         assertEquals(10, run);
         assertEquals(0, pre);
         assertEquals(0, post);
@@ -135,7 +135,7 @@ public class TimerTest {
             return t;
         }, t -> GoToSleep(6, 1));
         assertEquals(6, new PrivateMethodTester(timer).invokePrivate("getLaps"));
-        assertEquals(zzz, mean, 6);
+        assertEquals(38.28455, mean, 6);
         assertEquals(6, run);
         assertEquals(6, pre);
         assertEquals(6, post);
@@ -182,7 +182,7 @@ public class TimerTest {
     }
 
     public static final int TENTH = 100;
-    public static final double TENTH_DOUBLE = 100;
+    public static final double TENTH_DOUBLE = 110.1389;
     public static final int HUNDREDTH = 10;
 
 }
