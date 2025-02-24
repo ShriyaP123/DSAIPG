@@ -17,8 +17,12 @@ public class Heap_Comparisons {
         // Benchmarking different types of priority queues
         benchmarkPriorityQueue("Binary Heap", () -> new PriorityQueue<>(M, false, comparator, false));
         benchmarkPriorityQueue("Binary Heap with Floyd's Trick", () -> new PriorityQueue<>(M, false, comparator, true));
-        benchmarkPriorityQueue("4-ary Heap", () -> new PriorityQueue<>(M, false, comparator, false)); // Assuming 4-ary heap uses similar implementation
-        benchmarkPriorityQueue("4-ary Heap with Floyd's Trick", () -> new PriorityQueue<>(M, false, comparator, true));
+
+        //Benchmark FourAry Heap
+        benchmarkFourAryHeap();
+
+        //Benchmark FourAry Heap with Floyd trick
+        benchmarkFourAryHeapFloyd();
 
         // Benchmark Fibonacci Heap
         benchmarkFibonacciHeap();
@@ -73,6 +77,82 @@ public class Heap_Comparisons {
             throw new RuntimeException("Error clearing the priority queue", e);
         }
     }
+    private static void benchmarkFourAryHeap() {
+        try {
+            // Initialize the 4-ary Heap
+            FourAryHeap heap = new FourAryHeap(16000);
+            Random random = new Random();
+            final Integer[] maxSpilled = {null};
+
+            Benchmark_Timer<Void> benchmark = new Benchmark_Timer<>(
+                    "4-ary Heap",
+                    unused -> {
+                        for (int i = 0; i < INSERTIONS; i++) {
+                            if (heap.size() >= M) {
+                                int spilled = heap.removeMin();
+                                if (maxSpilled[0] == null || spilled > maxSpilled[0]) {
+                                    maxSpilled[0] = spilled;
+                                }
+                            }
+                            heap.insert(random.nextInt());
+                        }
+                        for (int i = 0; i < REMOVALS; i++) {
+                            heap.removeMin();  // Remove minimums gracefully
+                        }
+                    }
+            );
+
+            // Run the benchmark
+            double time = benchmark.run(null, 10);  // Number of iterations can be adjusted
+            System.out.printf("4-ary Heap: %.3f ms (Highest spilled: %d)%n", time, maxSpilled[0]);
+
+            // Clear the 4-ary Heap after the benchmark
+            clearFourAryHeap(heap);
+
+        } catch (OutOfMemoryError e) {
+            System.err.println("OutOfMemoryError: Unable to allocate more memory for 4-ary Heap");
+            System.exit(0);  // Stop the program or handle in another way
+        }
+    }
+
+    private static void benchmarkFourAryHeapFloyd() {
+        try {
+            // Initialize the 4-ary Heap with Floyd's Trick
+            FourAryHeapFloyd heap = new FourAryHeapFloyd(16000);
+            final Integer[] maxSpilled = {null};
+            Random random = new Random();
+
+            Benchmark_Timer<Void> benchmark = new Benchmark_Timer<>(
+                    "4-ary Heap with Floyd's Trick",
+                    unused -> {
+                        for (int i = 0; i < INSERTIONS; i++) {
+                            if (heap.size() >= M) {
+                                int spilled = heap.removeMin();
+                                if (maxSpilled[0] == null || spilled > maxSpilled[0]) {
+                                    maxSpilled[0] = spilled;
+                                }
+                            }
+
+                            heap.insert(random.nextInt());
+                        }
+                        for (int i = 0; i < REMOVALS; i++) {
+                            heap.removeMin();  // Remove minimums gracefully
+                        }
+                    }
+            );
+
+            // Run the benchmark
+            double time = benchmark.run(null, 10);  // Number of iterations can be adjusted
+            System.out.printf("4-ary Heap with Floyd's Trick: %.3f ms (Highest spilled: %d)%n", time, maxSpilled[0]);
+
+            // Clear the 4-ary Heap with Floyd's Trick after the benchmark
+            clearFourAryHeapFloyd(heap);
+
+        } catch (OutOfMemoryError e) {
+            System.err.println("OutOfMemoryError: Unable to allocate more memory for 4-ary Heap with Floyd's Trick");
+            System.exit(0);  // Stop the program or handle in another way
+        }
+    }
 
     private static void benchmarkFibonacciHeap() {
         try {
@@ -115,6 +195,20 @@ public class Heap_Comparisons {
         // Remove all elements from the Fibonacci heap
         while (fibonacciHeap.size() > 0) {
             fibonacciHeap.removeMin();  // Remove the minimum element
+        }
+    }
+
+    private static void clearFourAryHeap(FourAryHeap fourAryHeap) {
+        // Remove all elements from the FourAry heap
+        while (fourAryHeap.size() > 0) {
+            fourAryHeap.removeMin();  // Remove the minimum element
+        }
+    }
+
+    private static void clearFourAryHeapFloyd(FourAryHeapFloyd fourAryHeapFloyd) {
+        // Remove all elements from the FourAry heap
+        while (fourAryHeapFloyd.size() > 0) {
+            fourAryHeapFloyd.removeMin();  // Remove the minimum element
         }
     }
 }
