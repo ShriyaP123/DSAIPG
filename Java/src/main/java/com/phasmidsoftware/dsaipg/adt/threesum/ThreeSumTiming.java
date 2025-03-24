@@ -1,6 +1,6 @@
 package com.phasmidsoftware.dsaipg.adt.threesum;
 
-import com.phasmidsoftware.dsaipg.util.Stopwatch;
+import com.phasmidsoftware.dsaipg.util.benchmark.Stopwatch;
 import java.util.Arrays;
 
 public class ThreeSumTiming {

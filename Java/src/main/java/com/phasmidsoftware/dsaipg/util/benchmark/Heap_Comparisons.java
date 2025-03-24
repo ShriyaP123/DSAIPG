@@ -1,10 +1,13 @@
-package com.phasmidsoftware.dsaipg.util;
+package com.phasmidsoftware.dsaipg.util.benchmark;
 
 import java.util.*;
 import java.util.function.Supplier;
 
 import com.phasmidsoftware.dsaipg.adt.pq.PQException;
-import com.phasmidsoftware.dsaipg.adt.pq.PriorityQueue;
+import com.phasmidsoftware.dsaipg.adt.pq.PriorityQueue_BinaryHeap;
+import com.phasmidsoftware.dsaipg.util.FibonnaciHeap;
+import com.phasmidsoftware.dsaipg.util.FourAryHeap;
+import com.phasmidsoftware.dsaipg.util.FourAryHeapFloyd;
 
 public class Heap_Comparisons {
     private static final int INSERTIONS = 16000;
@@ -15,8 +18,8 @@ public class Heap_Comparisons {
         Comparator<Integer> comparator = Integer::compare;
 
         // Benchmarking different types of priority queues
-        benchmarkPriorityQueue("Binary Heap", () -> new PriorityQueue<>(M, false, comparator, false));
-        benchmarkPriorityQueue("Binary Heap with Floyd's Trick", () -> new PriorityQueue<>(M, false, comparator, true));
+        benchmarkPriorityQueue("Binary Heap", () -> new PriorityQueue_BinaryHeap<>(M, false, comparator, false));
+        benchmarkPriorityQueue("Binary Heap with Floyd's Trick", () -> new PriorityQueue_BinaryHeap<>(M, false, comparator, true));
 
         //Benchmark FourAry Heap
         benchmarkFourAryHeap();
@@ -28,8 +31,8 @@ public class Heap_Comparisons {
         benchmarkFibonacciHeap();
     }
 
-    private static void benchmarkPriorityQueue(String name, Supplier<PriorityQueue<Integer>> supplier) {
-        PriorityQueue<Integer> pq = supplier.get();
+    private static void benchmarkPriorityQueue(String name, Supplier<PriorityQueue_BinaryHeap<Integer>> supplier) {
+        PriorityQueue_BinaryHeap<Integer> pq = supplier.get();
         Random random = new Random();
         final Integer[] maxSpilled = {null};
         Comparator<Integer> comparator = Integer::compare;
@@ -67,7 +70,7 @@ public class Heap_Comparisons {
         clearHeap(pq);
     }
 
-    private static void clearHeap(PriorityQueue<Integer> pq) {
+    private static void clearHeap(PriorityQueue_BinaryHeap<Integer> pq) {
         try {
             // Remove all elements from the priority queue
             while (pq.size() > 0) {
