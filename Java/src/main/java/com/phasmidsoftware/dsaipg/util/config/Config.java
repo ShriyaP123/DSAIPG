@@ -53,6 +53,7 @@ public class Config {
      */
     public static Config load() throws IOException {
         return load(null);
+
     }
 
     /**

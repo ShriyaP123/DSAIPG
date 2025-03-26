@@ -2,8 +2,10 @@
  * Copyright (c) 2017. Phasmid Software
  */
 
-package com.phasmidsoftware.dsaipg.util;
+package com.phasmidsoftware.dsaipg.util.benchmark;
 
+import com.phasmidsoftware.dsaipg.util.benchmark.Benchmark;
+import com.phasmidsoftware.dsaipg.util.benchmark.Benchmark_Timer;
 import org.junit.Test;
 
 import java.util.function.Consumer;

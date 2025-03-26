@@ -43,13 +43,16 @@ public abstract class BaseHelper<X> {
         return config;
     }
 
+    public void reset() {
+        this.n = 0; // Or reset to its initial state
+    }
     /**
      * @param n the size to be managed.
      * @throws HelperException if n is inconsistent.
      */
     public void init(int n) {
-        if (this.n == 0 || this.n == n) this.n = n;
-        else throw new HelperException("Helper: n is already set to a different value");
+        if (this.n == 0 ) this.n = n;
+//        else throw new HelperException("Helper: n is already set to a different value");
     }
 
     /**
@@ -60,6 +63,7 @@ public abstract class BaseHelper<X> {
      * @param nRuns the number of runs for initialization
      */
     public void init(int n, int nRuns) {
+        init(n);
         instrumenter.init(n, nRuns);
     }
 
